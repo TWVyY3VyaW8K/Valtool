@@ -6,12 +6,7 @@ This tool can be useful for solving some reversing challenges in CTFs events. Im
 
 
 ### Configuration
-You must configure your pin PATH inside of script
-
-```sh
-PIN = "./pin-2.13-62732-gcc.4.4.7-linux/pin"
-INSCOUNT32 = "./pin-2.13-62732-gcc.4.4.7-linux/inscount0.so"
-INSCOUNT64 = "./pin-2.13-62732-gcc.4.4.7-linux/source/tools/ManualExamples/obj-intel64/inscount0.so"
+You must have the lastest installation of Valgrind
 ```
 
 ### Help
@@ -20,7 +15,7 @@ INSCOUNT64 = "./pin-2.13-62732-gcc.4.4.7-linux/source/tools/ManualExamples/obj-i
 
 ```sh
 $python pintool.py 
-usage: pintool.py [-h] [-e] [-l LEN] [-c NUMBER] [-b CHARACTER] [-a ARCH]
+usage: pintool.py [-h] [-e] [-l LEN] [-c NUMBER] [-b CHARACTER]
                    [-i INITPASS] [-s SIMBOL] [-d EXPRESSION]
                    Filename
 
@@ -35,7 +30,6 @@ optional arguments:
   -c NUMBER      Charset definition for brute force (1-Lowercase, 2-Uppecase,
                  3-Numbers, 4-Hexadecimal, 5-Punctuation, 6-All)
   -b CHARACTER   Add characters for the charset, example -b _-
-  -a ARCH        Program architecture 32 or 64 bits, -b 32 or -b 64
   -i INITPASS    Inicial password characters, example -i CTF{
   -s SIMBOL      Simbol for complete all password (Default: _ )
   -d EXPRESSION  Difference between instructions that are successful or not
