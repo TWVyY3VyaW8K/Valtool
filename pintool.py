@@ -6,6 +6,8 @@
 #prog_release = '20151028'
 #prog_author = 'Eduardo Garcia Melia'
 #prog_author_mail = 'wagiro@gmail.com'
+#prog_editor = 'Daniele Bianchin'
+#prog_editor_mail = 'bbianchind@gmail.com'
 
 
 import sys
@@ -13,22 +15,17 @@ import string as s
 import subprocess
 import argparse
 import re
+import os
 
-
-#configure by the user
-PIN = "./pin-3.6-97554-g31f0a167d-gcc-linux/pin"
-INSCOUNT32 = "./pin-3.6-97554-g31f0a167d-gcc-linux/source/tools/ManualExamples/obj-ia32/inscount0.so"
-INSCOUNT64 = "./pin-3.6-97554-g31f0a167d-gcc-linux/source/tools/ManualExamples/obj-intel64/inscount0.so"
 
 
 def start():
 	
-	parser = argparse.ArgumentParser(prog='pintool.py')
+	parser = argparse.ArgumentParser(prog='valtool.py')
 	parser.add_argument('-e', dest='study', action='store_true', default=False, help='Study the password length, for example -e -l 40, with 40 characters')
 	parser.add_argument('-l', dest='len', type=str, nargs=1, default='10', help='Length of password (Default: 10 )')
 	parser.add_argument('-c', dest='number', type=str, default=1, help="Charset definition for brute force\n (1-Lowercase,\n2-Uppecase,\n3-Numbers,\n4-Hexadecimal,\n5-Punctuation,\n6-All)")
 	parser.add_argument('-b', dest='character', type=str, nargs=1, default='', help='Add characters for the charset, example -b _-')
-	parser.add_argument('-a', dest='arch', type=str, nargs=1, default='32', help='Program architecture 32 or 64 bits, -b 32 or -b 64 ')
 	parser.add_argument('-i', dest='initpass', type=str, nargs=1, default='', help='Inicial password characters, example -i CTF{')
 	parser.add_argument('-s', dest='simbol', type=str, nargs=1, default='_', help='Simbol for complete all password (Default: _ )')
 	parser.add_argument('-d', dest='expression', type=str, nargs=1, default='!= 0', help="Difference between instructions that are successful or not (Default: != 0, example -d '== -12', -d '=> 900', -d '<= 17' or -d '!= 32')")
@@ -72,15 +69,15 @@ def getCharset(num,addchar):
 
 def pin(passwd):
 	try:
-		command = "echo " + passwd + " | " + PIN + " -t " + INSCOUNT + " -- ./"+ args.Filename + " ; cat inscount.out"
-		output = subprocess.check_output(command,shell=True,stderr=subprocess.PIPE)
+		command = "echo %s | valgrind --tool=exp-bbv --log-fd=1 ./%s; rm bb.out*" % (passwd, args.Filename)
+		output = os.popen(command).read()
 	except:
 		print "Unexpected error:", sys.exc_info()[0]
 		raise
 
-	output = re.findall(r"Count ([\w.-]+)", output)
+	output =  ''.join(re.findall(r"Total instructions: [0-9]+", output)).split(' ')[2]
 
-	return int(''.join(output))
+	return int(output)
 
 
 def lengthdetect(passlen):
@@ -198,16 +195,6 @@ if __name__ == '__main__':
 	if len(symbfill) > 1:
 		print "Only one symbol is allowed."
 		sys.exit()
-
-
-	if arch == "32":
-		INSCOUNT = INSCOUNT32
-	elif arch == "64":
-		INSCOUNT = INSCOUNT64
-	else:
-		print "Unknown architecture"
-		sys.exit()
-
 
 	if study is True:
 		lengthdetect(passlen)
