@@ -7,13 +7,10 @@ This tool can be useful for solving some reversing challenges in CTFs events. Im
 
 ### Configuration
 You must have the lastest installation of Valgrind
-```
 
 ### Help
 
-
-
-```sh
+```
 $python pintool.py 
 usage: pintool.py [-h] [-e] [-l LEN] [-c NUMBER] [-b CHARACTER]
                    [-i INITPASS] [-s SIMBOL] [-d EXPRESSION]
