@@ -176,7 +176,6 @@ if __name__ == '__main__':
 	passlen = int(''.join(args.len))
 	symbfill = ''.join(args.simbol)
 	charset = symbfill+getCharset(args.number,args.character)
-	arch = ''.join(args.arch)
 	expression = ''.join(args.expression).rstrip()
 	number = expression.split()[1]
 	study = args.study
