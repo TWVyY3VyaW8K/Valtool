@@ -6,7 +6,7 @@ This tool can be useful for solving some reversing challenges in CTFs events. Im
 
 
 ### Configuration
-You must have the lastest installation of Valgrind
+You must have the latest installation of Valgrind
 
 ### Help
 
