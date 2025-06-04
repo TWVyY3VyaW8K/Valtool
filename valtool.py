@@ -1,7 +1,7 @@
 #!/usr/bin/env/python
 #coding: utf8 
 #
-#prog_name= 'pintool.py'
+#prog_name= 'valtool.py'
 #prog_version = '0.2'
 #prog_release = '20151028'
 #prog_author = 'Eduardo Garcia Melia'
